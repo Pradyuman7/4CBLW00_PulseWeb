@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+    padding: 20px;
+    text-align: center;
+}
+
+#app {
+    max-width: 600px;
+    margin: auto;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.option {
+    margin: 5px;
+    padding: 10px 20px;
+    background: #dbeafe;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.option.selected {
+    background: #3b82f6;
+    color: white;
+}
+
+#submit, #backBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
