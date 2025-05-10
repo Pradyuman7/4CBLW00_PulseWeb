@@ -5,39 +5,53 @@ const questionnaire = document.getElementById("questionnaire");
 const dashboard = document.getElementById("dashboard");
 const ctx = document.getElementById("trendChart").getContext("2d");
 
-const allQuestions = [
-    "I feel emotionally balanced most of the time.",
-    "I find it easy to focus on tasks at work.",
-    "I have felt anxious or overwhelmed recently.",
-    "I feel confident in my ability to handle work challenges.",
-    "I often experience a sense of fulfillment in my work.",
-    "I feel stressed or under pressure frequently.",
-    "I feel I have a healthy work-life balance.",
-    "I can take breaks or time off when needed without guilt.",
-    "I have enough support to manage my workload.",
-    "I feel exhausted or emotionally drained by my work.",
-    "I feel comfortable being myself at work.",
-    "I feel valued by my team.",
-    "I have someone at work I can talk to when I'm struggling.",
-    "I feel included in team discussions and decisions.",
-    "My manager or team lead shows genuine care for team well-being."
-];
-
 let currentQuestionIndex = 0;
 let selectedQuestions = [];
 let answers = {};
 
-function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
-}
-
 function loadQuestions() {
-    selectedQuestions = shuffle(allQuestions).slice(0, 5);
+    const categories = {
+        mentalHealth: [
+            "I feel emotionally balanced most of the time.",
+            "I find it easy to focus on tasks at work.",
+            "I feel confident in my ability to handle work challenges.",
+            "I often experience a sense of fulfillment in my work."
+        ],
+        stress: [
+            "I have felt anxious or overwhelmed recently.",
+            "I feel stressed or under pressure frequently.",
+            "I feel I have a healthy work-life balance.",
+            "I can take breaks or time off when needed without guilt.",
+            "I have enough support to manage my workload.",
+            "I feel exhausted or emotionally drained by my work."
+        ],
+        cohesion: [
+            "I feel comfortable being myself at work.",
+            "I feel valued by my team.",
+            "I have someone at work I can talk to when I'm struggling.",
+            "I feel included in team discussions and decisions.",
+            "My manager or team lead shows genuine care for team well-being."
+        ]
+    };
+
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+    }
+
+    const selectedMental = getRandomItems(categories.mentalHealth, 2);
+    const selectedStress = getRandomItems(categories.stress, 2);
+    const selectedCohesion = getRandomItems(categories.cohesion, 2);
+
+    selectedQuestions = [...selectedMental, ...selectedStress, ...selectedCohesion]
+        .sort(() => Math.random() - 0.5); // shuffle for mixed order
+
     currentQuestionIndex = 0;
     answers = {};
     submitBtn.classList.add("hidden");
     displayQuestion();
 }
+
 
 function displayQuestion() {
     const qText = selectedQuestions[currentQuestionIndex];

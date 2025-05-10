@@ -1,44 +1,119 @@
+/* Reset & base font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    color: #333;
-    padding: 20px;
-    text-align: center;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #f0f4f8, #e0f2fe);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    color: #1e293b;
+    position: relative;
 }
 
+.background-overlay {
+    position: fixed;
+    inset: 0;
+    background: url('https://www.transparenttextures.com/patterns/white-wall.png');
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* Main Card */
 #app {
+    background: white;
     max-width: 600px;
-    margin: auto;
+    width: 100%;
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
-.question {
+/* Typography */
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.4em;
+}
+
+header p {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 1.5em;
+}
+
+h2 {
+    margin-bottom: 1em;
+    font-size: 1.4rem;
+}
+
+/* Question Styling */
+#question-container {
+    font-size: 1.1rem;
     margin-bottom: 20px;
 }
 
-.option {
-    margin: 5px;
-    padding: 10px 20px;
-    background: #dbeafe;
+button {
+    font-size: 1rem;
+    padding: 12px 20px;
+    margin: 8px 4px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Option Buttons */
+.option {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.option:hover {
+    background-color: #bae6fd;
 }
 
 .option.selected {
-    background: #3b82f6;
+    background-color: #0ea5e9;
     color: white;
 }
 
+/* Submit / Back Buttons */
 #submit, #backBtn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #10b981;
+    background-color: #10b981;
     color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    margin-top: 16px;
 }
 
+#submit:hover, #backBtn:hover {
+    background-color: #059669;
+}
+
+canvas {
+    margin-top: 24px;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.03);
+}
+
+/* Hidden Elements */
 .hidden {
     display: none;
+}
+
+.question {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

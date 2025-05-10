@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Mental Health Pulse</title>
     <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div id="app">
-    <div id="questionnaire">
-        <h1>Mental Health Pulse Check</h1>
-        <div id="question-container"></div>
-        <button id="submit" class="hidden">Submit</button>
-    </div>
+<div class="background-overlay"></div>
 
-    <div id="dashboard" class="hidden">
-        <h2>Your Mental Health Snapshot</h2>
+<div id="app">
+    <header>
+        <h1>Mental Health Pulse Check</h1>
+        <p>Take a short check-in to see how you're doing today.</p>
+    </header>
+
+    <section id="questionnaire">
+        <div id="question-container" class="question"></div>
+        <button id="submit" class="hidden">Submit</button>
+    </section>
+
+    <section id="dashboard" class="hidden">
+        <h2>Your Trends</h2>
         <canvas id="trendChart" width="400" height="300"></canvas>
         <button id="backBtn">Back to Questionnaire</button>
-    </div>
+    </section>
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
