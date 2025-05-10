@@ -4,36 +4,48 @@ const backBtn = document.getElementById("backBtn");
 const questionnaire = document.getElementById("questionnaire");
 const dashboard = document.getElementById("dashboard");
 const ctx = document.getElementById("trendChart").getContext("2d");
+const categories = {
+    mentalHealth: [
+        "I feel emotionally balanced most of the time.",
+        "I find it easy to focus on tasks at work.",
+        "I feel confident in my ability to handle work challenges.",
+        "I often experience a sense of fulfillment in my work.",
+        "I am able to recognize and manage my emotions effectively.",
+        "I feel mentally present and engaged throughout the workday.",
+        "I feel hopeful about my future both personally and professionally.",
+        "I am satisfied with my overall mental well-being."
+    ],
+    stress: [
+        "I have felt anxious or overwhelmed recently.",
+        "I feel stressed or under pressure frequently.",
+        "I feel I have a healthy work-life balance.",
+        "I can take breaks or time off when needed without guilt.",
+        "I have enough support to manage my workload.",
+        "I feel exhausted or emotionally drained by my work.",
+        "I worry about meeting deadlines or expectations at work.",
+        "I feel tense or irritable during or after work hours.",
+        "I find it hard to disconnect from work during personal time.",
+        "I am sleeping well and feel rested during the day."
+    ],
+    cohesion: [
+        "I feel comfortable being myself at work.",
+        "I feel valued by my team.",
+        "I have someone at work I can talk to when I'm struggling.",
+        "I feel included in team discussions and decisions.",
+        "My manager or team lead shows genuine care for team well-being.",
+        "I trust the people I work with.",
+        "I feel a sense of belonging within my team or department.",
+        "Team members support each other through challenges.",
+        "Open communication is encouraged and practiced in my team.",
+        "I feel motivated when working with my team."
+    ]
+};
 
 let currentQuestionIndex = 0;
 let selectedQuestions = [];
 let answers = {};
 
 function loadQuestions() {
-    const categories = {
-        mentalHealth: [
-            "I feel emotionally balanced most of the time.",
-            "I find it easy to focus on tasks at work.",
-            "I feel confident in my ability to handle work challenges.",
-            "I often experience a sense of fulfillment in my work."
-        ],
-        stress: [
-            "I have felt anxious or overwhelmed recently.",
-            "I feel stressed or under pressure frequently.",
-            "I feel I have a healthy work-life balance.",
-            "I can take breaks or time off when needed without guilt.",
-            "I have enough support to manage my workload.",
-            "I feel exhausted or emotionally drained by my work."
-        ],
-        cohesion: [
-            "I feel comfortable being myself at work.",
-            "I feel valued by my team.",
-            "I have someone at work I can talk to when I'm struggling.",
-            "I feel included in team discussions and decisions.",
-            "My manager or team lead shows genuine care for team well-being."
-        ]
-    };
-
     function getRandomItems(arr, count) {
         const shuffled = [...arr].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, count);
@@ -67,8 +79,7 @@ function displayQuestion() {
         button.addEventListener("click", () => {
             document.querySelectorAll(".option").forEach(b => b.classList.remove("selected"));
             button.classList.add("selected");
-            const value = button.getAttribute("data-value");
-            answers[currentQuestionIndex] = value;
+            answers[currentQuestionIndex] = button.getAttribute("data-value");
 
             setTimeout(() => {
                 currentQuestionIndex++;
@@ -101,33 +112,9 @@ backBtn.addEventListener("click", () => {
 });
 
 function renderChart() {
-    const categories = {
-        mentalHealth: [
-            "I feel emotionally balanced most of the time.",
-            "I find it easy to focus on tasks at work.",
-            "I feel confident in my ability to handle work challenges.",
-            "I often experience a sense of fulfillment in my work."
-        ],
-        stress: [
-            "I have felt anxious or overwhelmed recently.",
-            "I feel stressed or under pressure frequently.",
-            "I feel I have a healthy work-life balance.",
-            "I can take breaks or time off when needed without guilt.",
-            "I have enough support to manage my workload.",
-            "I feel exhausted or emotionally drained by my work."
-        ],
-        cohesion: [
-            "I feel comfortable being myself at work.",
-            "I feel valued by my team.",
-            "I have someone at work I can talk to when I'm struggling.",
-            "I feel included in team discussions and decisions.",
-            "My manager or team lead shows genuine care for team well-being."
-        ]
-    };
-
     const baseline = {
-        mentalHealth: 0.75,
-        stress: 0.65,
+        mentalHealth: 0.55,
+        stress: 0.35,
         cohesion: 0.70
     };
 

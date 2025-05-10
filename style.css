@@ -72,6 +72,7 @@ button {
 
 /* Option Buttons */
 .option {
+    margin-top: 1rem;
     background-color: #e0f2fe;
     color: #0369a1;
 }
