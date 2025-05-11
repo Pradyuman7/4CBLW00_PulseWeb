@@ -3,6 +3,9 @@ const submitBtn = document.getElementById("submit");
 const backBtn = document.getElementById("backBtn");
 const questionnaire = document.getElementById("questionnaire");
 const dashboard = document.getElementById("dashboard");
+const suggestionSection = document.getElementById('suggestions');
+const prompt = document.getElementById('suggestionPrompt');
+const cardContainer = document.getElementById('suggestionCards');
 const ctx = document.getElementById("trendChart").getContext("2d");
 const categories = {
     mentalHealth: [
@@ -104,11 +107,13 @@ submitBtn.addEventListener("click", () => {
 
     questionnaire.classList.add("hidden");
     dashboard.classList.remove("hidden");
+    submitBtn.classList.remove("hidden");
     renderChart();
 });
 
 backBtn.addEventListener("click", () => {
     dashboard.classList.add("hidden");
+    suggestionSection.classList.add("hidden");
     questionnaire.classList.remove("hidden");
     loadQuestions();
 });
@@ -198,16 +203,14 @@ function checkScoresAndSuggest(scores) {
 
     for (const [category, { agree, total }] of Object.entries(scores)) {
         const ratio = total === 0 ? 1 : agree / total;
-        if (ratio < threshold) {
+        if (ratio < threshold && category !== "stress") {
+            lowCategories.push(category);
+        } else if (ratio > threshold && category === "stress") {
             lowCategories.push(category);
         }
     }
 
     if (lowCategories.length > 0) {
-        const suggestionSection = document.getElementById('suggestions');
-        const prompt = document.getElementById('suggestionPrompt');
-        const cardContainer = document.getElementById('suggestionCards');
-
         suggestionSection.classList.remove('hidden');
         prompt.textContent = `Based on your responses, you might benefit from support in: ${lowCategories.join(', ')}. Here are some suggestions:`;
 
