@@ -187,6 +187,77 @@ function renderChart() {
             }
         }
     });
+
+    // after chart rendering
+    checkScoresAndSuggest(scores);
+}
+
+function checkScoresAndSuggest(scores) {
+    const threshold = 0.6;
+    const lowCategories = [];
+
+    for (const [category, { agree, total }] of Object.entries(scores)) {
+        const ratio = total === 0 ? 1 : agree / total;
+        if (ratio < threshold) {
+            lowCategories.push(category);
+        }
+    }
+
+    if (lowCategories.length > 0) {
+        const suggestionSection = document.getElementById('suggestions');
+        const prompt = document.getElementById('suggestionPrompt');
+        const cardContainer = document.getElementById('suggestionCards');
+
+        suggestionSection.classList.remove('hidden');
+        prompt.textContent = `Based on your responses, you might benefit from support in: ${lowCategories.join(', ')}. Here are some suggestions:`;
+
+        cardContainer.innerHTML = ''; // Clear previous suggestions
+        provideSuggestions(lowCategories, cardContainer);
+    }
+}
+
+function provideSuggestions(categories, container) {
+    categories.forEach(category => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        if (category === 'stress') {
+            card.innerHTML = `
+        <h3>Managing Stress</h3>
+        <ul>
+          <li>Take short breaks every hour to reset your mind.</li>
+          <li>Try simple games or meditative music to relax.</li>
+        </ul>
+      `;
+        }
+
+        if (category === 'cohesion') {
+            const teammates = ["Alex", "Jordan", "Sam", "Taylor", "Riley", "Casey"];
+            const selected = teammates.sort(() => 0.5 - Math.random()).slice(0, 2);
+            const lunchTime = `${12 + Math.floor(Math.random() * 2)}:${Math.random() > 0.5 ? '00' : '30'} PM`;
+
+            card.innerHTML = `
+        <h3>Boosting Team Cohesion</h3>
+        <ul>
+          <li>Invite ${selected[0]} and ${selected[1]} to lunch at ${lunchTime}.</li>
+          <li>Start a casual chat group or check-in with team members.</li>
+        </ul>
+      `;
+        }
+
+        if (category === 'mentalHealth') {
+            card.innerHTML = `
+        <h3>Supporting Mental Health</h3>
+        <ul>
+          <li>Try daily mindfulness or short guided meditations.</li>
+          <li>Keep a journal to reflect and decompress.</li>
+          <li>Talk to someone you trust or a counselor if needed.</li>
+        </ul>
+      `;
+        }
+
+        container.appendChild(card);
+    });
 }
 
 // Initialize on load
