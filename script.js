@@ -13,7 +13,9 @@ const categories = {
         "I am able to recognize and manage my emotions effectively.",
         "I feel mentally present and engaged throughout the workday.",
         "I feel hopeful about my future both personally and professionally.",
-        "I am satisfied with my overall mental well-being."
+        "I am satisfied with my overall mental well-being.",
+        "I can maintain a positive outlook even during difficult times.",
+        "I feel in control of my thoughts and emotions during the workday."
     ],
     stress: [
         "I have felt anxious or overwhelmed recently.",
