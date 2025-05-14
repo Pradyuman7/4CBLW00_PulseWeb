@@ -20,14 +20,14 @@ const categories = {
     stress: [
         "I have felt anxious or overwhelmed recently.",
         "I feel stressed or under pressure frequently.",
-        "I feel I have a healthy work-life balance.",
-        "I can take breaks or time off when needed without guilt.",
-        "I have enough support to manage my workload.",
+        "I feel I have a bad work-life balance.",
+        "I feel guilty in taking breaks or time off when needed.",
+        "I have less than expected support to manage my workload.",
         "I feel exhausted or emotionally drained by my work.",
         "I worry about meeting deadlines or expectations at work.",
         "I feel tense or irritable during or after work hours.",
         "I find it hard to disconnect from work during personal time.",
-        "I am sleeping well and feel rested during the day."
+        "I am not sleeping well and don't feel rested during the day."
     ],
     cohesion: [
         "I feel comfortable being myself at work.",
@@ -136,9 +136,10 @@ function renderChart() {
         }
     });
 
-    const userScores = Object.keys(scores).map(category =>
-        scores[category].total > 0 ? scores[category].agree / scores[category].total : null
-    );
+    const userScores = Object.keys(scores).map(category => {
+        const ratio = scores[category].total > 0 ? scores[category].agree / scores[category].total : null;
+        return category === "stress" ? (1 - ratio) : ratio; // Invert stress
+    });
 
     const baselineScores = Object.keys(baseline).map(k => baseline[k]);
 
@@ -150,7 +151,7 @@ function renderChart() {
     window.trendChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["Mental Health", "Stress", "Social Cohesion"],
+            labels: ["Mental Health", "Stress resilience", "Social Cohesion"],
             datasets: [
                 {
                     label: "Baseline",
