@@ -42,6 +42,7 @@ const categories = {
         "I feel motivated when working with my team."
     ]
 };
+const ip_address = ""
 
 let currentQuestionIndex = 0;
 let selectedQuestions = [];
@@ -65,6 +66,25 @@ function loadQuestions() {
     submitBtn.classList.add("hidden");
     displayQuestion();
 }
+
+
+function scoreToColor(scores) {
+    const r = Math.round((1 - scores[1]) * 255); // red for stress
+    const g = Math.round(scores[0] * 255);       // mental health for green
+    const b = Math.round(scores[2] * 255);       // social cohesion for blue
+    return { r, g, b };
+}
+
+function sendColorToESP({ r, g, b }) {
+    const esp32Url = `http://${ip_address}/color?r=${r}&g=${g}&b=${b}`;
+    fetch(esp32Url)
+        .then(response => {
+            if (!response.ok) throw new Error("ESP32 did not respond.");
+            console.log("Color sent to ESP32:", r, g, b);
+        })
+        .catch(err => console.error("Failed to send color:", err));
+}
+
 
 
 function displayQuestion() {
@@ -188,6 +208,9 @@ function renderChart() {
             }
         }
     });
+
+    const color = scoreToColor(userScores);
+    sendColorToESP(color);
 }
 
 // Initialize on load
