@@ -42,6 +42,7 @@ const categories = {
         "I feel motivated when working with my team."
     ]
 };
+const ESP32_IP_ADDRESS = ""
 
 let currentQuestionIndex = 0;
 let selectedQuestions = [];
@@ -112,6 +113,13 @@ backBtn.addEventListener("click", () => {
     questionnaire.classList.remove("hidden");
     loadQuestions();
 });
+
+function getMoodColor([mental, stressResilience, cohesion]) {
+    const avg = (mental + stressResilience + cohesion) / 3;
+    if (avg > 0.7) return [0, 255, 0];         // Green (Good)
+    else if (avg > 0.4) return [255, 165, 0];  // Orange (Moderate)
+    else return [255, 0, 0];                   // Red (Poor)
+}
 
 function renderChart() {
     const baseline = {
@@ -188,6 +196,11 @@ function renderChart() {
             }
         }
     });
+
+    const [r, g, b] = getMoodColor(userScores);
+    fetch(`http://${ESP32_IP_ADDRESS}/setColor?r=${r}&g=${g}&b=${b}`)
+        .then(res => console.log("Color sent to ESP32"))
+        .catch(err => console.error("Failed to send color:", err));
 }
 
 // Initialize on load
