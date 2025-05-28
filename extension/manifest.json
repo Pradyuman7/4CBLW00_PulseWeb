@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Pulse Reminder",
+  "version": "0.1",
+  "description": "Reminds user to check in on mental wellness.",
+  "permissions": ["notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Pulse Reminder"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}
