@@ -1,12 +1,22 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Adafruit_NeoPixel.h>
+#include <Servo.h>
+
+Servo myServo;
 
 #define NEOPIXEL_PIN 14 // The data pin your NeoPixel ring is connected to
 #define NUM_PIXELS   12 // The number of LEDs in your NeoPixel ring
 
 const char* ssid = "WIFI_SSID";
 const char* password = "PASSWORD";
+
+int startAngle = 90;
+int moveAmount = 35;
+int currentAngle;
+int targetAngle;
+int stepDelay = 20;
+int stepSize = 1;
 
 Adafruit_NeoPixel ring(NUM_PIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
@@ -18,6 +28,43 @@ void setColor(int r, int g, int b) {
   }
   ring.show();
   delay(10);
+
+  const int GREEN_THRESHOLD = 200;
+  const int RED_THRESHOLD = 200;
+
+  if (g >= GREEN_THRESHOLD && r < GREEN_THRESHOLD && b < GREEN_THRESHOLD) {
+    Serial.println("High Green detected: Opening petals!");
+    moveServoSmoothly(openAngle);
+  } else if (r >= RED_THRESHOLD && g < RED_THRESHOLD && b < RED_THRESHOLD) {
+    Serial.println("High Red detected: Keeping petals closed!");
+    moveServoSmoothly(closedAngle);
+  } else {
+    Serial.println("Other color detected: Moving petals to start angle.");
+    moveServoSmoothly(startAngle);
+  }
+}
+
+void moveServoSmoothly(int targetAngle) {
+  if (targetAngle == currentServoAngle) {
+    return;
+  }
+
+  int direction = (targetAngle > currentServoAngle) ? 1 : -1;
+
+  while (currentServoAngle != targetAngle) {
+    currentServoAngle += direction * stepSize;
+
+    if ((direction == 1 && currentServoAngle > targetAngle) ||
+        (direction == -1 && currentServoAngle < targetAngle)) {
+      currentServoAngle = targetAngle;
+    }
+
+    myServo.write(currentServoAngle);
+    delay(stepDelay);
+  }
+
+  Serial.print("Servo moved to: ");
+  Serial.println(currentServoAngle);
 }
 
 void handleSetColor() {
@@ -56,9 +103,15 @@ void setup() {
   Serial.print("ESP32 connected with IP: ");
   Serial.println(WiFi.localIP());
 
-  ring.begin(); // Initialize NeoPixel library
+  ring.begin();
   ring.show();  // Turn off all pixels (clear the strip)
   ring.setBrightness(50);
+
+  myServo.attach(servoPin);
+  currentServoAngle = startAngle;
+  myServo.write(currentServoAngle);
+  Serial.print("Servo initialized to: ");
+  Serial.println(currentServoAngle);
 
   server.on("/setColor", handleSetColor);
   server.begin();
