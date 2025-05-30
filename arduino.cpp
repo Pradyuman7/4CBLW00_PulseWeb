@@ -1,7 +1,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Adafruit_NeoPixel.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
 
 Servo myServo;
 
