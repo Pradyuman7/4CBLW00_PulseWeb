@@ -22,9 +22,17 @@ void handleSetColor() {
     int r = server.arg("r").toInt();
     int g = server.arg("g").toInt();
     int b = server.arg("b").toInt();
+    Serial.print("Received Color: R = ");
+    Serial.print(r);
+    Serial.print(", G = ");
+    Serial.print(g);
+    Serial.print(", B = ");
+    Serial.println(b);
     setColor(r, g, b);
+    server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "text/plain", "Color set");
   } else {
+    server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(400, "text/plain", "Missing RGB values");
   }
 }
