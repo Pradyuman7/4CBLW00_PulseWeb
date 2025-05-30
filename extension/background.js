@@ -4,7 +4,7 @@ function showNotification() {
     chrome.notifications.create({
         type: "basic",
         iconUrl: "icon.png",
-        title: "Pulse Check-In",
+        title: "WebPulse Check-In",
         message: "How are you feeling? Tap to answer a few quick questions.",
         priority: 2
     });
