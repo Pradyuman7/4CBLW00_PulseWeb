@@ -13,11 +13,12 @@ const char* password = "PASSWORD";
 
 int servoPin = 18;
 int startAngle = 90;
-int moveAmount = 35;
-int currentAngle;
-int targetAngle;
+int openAngle = 125;
+int closedAngle = 55;
+int currentServoAngle;
 int stepDelay = 20;
 int stepSize = 1;
+
 
 Adafruit_NeoPixel ring(NUM_PIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
