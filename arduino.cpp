@@ -1,20 +1,22 @@
 #include <WiFi.h>
 #include <WebServer.h>
+#include <Adafruit_NeoPixel.h>
+
+#define NEOPIXEL_PIN 14 // The data pin your NeoPixel ring is connected to
+#define NUM_PIXELS   12 // The number of LEDs in your NeoPixel ring
 
 const char* ssid = "WIFI_SSID";
 const char* password = "PASSWORD";
 
-// change the pins
-const int redPin = 14;
-const int greenPin = 12;
-const int bluePin = 13;
+Adafruit_NeoPixel ring(NUM_PIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 WebServer server(80);
 
 void setColor(int r, int g, int b) {
-  analogWrite(redPin, r);
-  analogWrite(greenPin, g);
-  analogWrite(bluePin, b);
+  for (int i = 0; i < NUM_PIXELS; i++) {
+    ring.setPixelColor(i, r, g, b);
+  }
+  ring.show();
 }
 
 void handleSetColor() {
@@ -22,13 +24,16 @@ void handleSetColor() {
     int r = server.arg("r").toInt();
     int g = server.arg("g").toInt();
     int b = server.arg("b").toInt();
+
     Serial.print("Received Color: R = ");
     Serial.print(r);
     Serial.print(", G = ");
     Serial.print(g);
     Serial.print(", B = ");
     Serial.println(b);
+
     setColor(r, g, b);
+
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(200, "text/plain", "Color set");
   } else {
