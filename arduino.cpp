@@ -17,6 +17,7 @@ void setColor(int r, int g, int b) {
     ring.setPixelColor(i, r, g, b);
   }
   ring.show();
+  delay(10);
 }
 
 void handleSetColor() {
@@ -55,9 +56,9 @@ void setup() {
   Serial.print("ESP32 connected with IP: ");
   Serial.println(WiFi.localIP());
 
-  pinMode(redPin, OUTPUT);
-  pinMode(greenPin, OUTPUT);
-  pinMode(bluePin, OUTPUT);
+  ring.begin(); // Initialize NeoPixel library
+  ring.show();  // Turn off all pixels (clear the strip)
+  ring.setBrightness(50);
 
   server.on("/setColor", handleSetColor);
   server.begin();
