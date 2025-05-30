@@ -11,6 +11,7 @@ Servo myServo;
 const char* ssid = "WIFI_SSID";
 const char* password = "PASSWORD";
 
+int servoPin = 18;
 int startAngle = 90;
 int moveAmount = 35;
 int currentAngle;
