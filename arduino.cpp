@@ -24,6 +24,10 @@ Adafruit_NeoPixel ring(NUM_PIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 WebServer server(80);
 
+void moveServoSmoothly(int targetAngle);
+void setColor(int r, int g, int b);
+void handleSetColor();
+
 void setColor(int r, int g, int b) {
   for (int i = 0; i < NUM_PIXELS; i++) {
     ring.setPixelColor(i, r, g, b);
