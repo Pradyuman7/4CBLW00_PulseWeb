@@ -42,7 +42,7 @@ const categories = {
         "I feel motivated when working with my team."
     ]
 };
-const ESP32_IP_ADDRESS = "192.168.2.35"
+const ESP32_IP_ADDRESS = "172.20.10.2"
 
 let currentQuestionIndex = 0;
 let selectedQuestions = [];
