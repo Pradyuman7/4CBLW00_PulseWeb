@@ -17,7 +17,26 @@
                 <p>Take a quick check-in to see how you're doing today.</p>
             </header>
 
+            <section id="introduction">
+                <p>This short check-in assesses three areas:</p>
+                <strong>Mental Health</strong> your emotional and cognitive wellbeing<br/>
+                <strong>Stress Resilience</strong> how well you're handling pressure<br/>
+                <strong>Social Cohesion</strong> your sense of connection at work<br/>
+                <br/>
+
+                <p>At the end, a color will represent your current state:</p>
+                <span style="color:green;">Green</span> — Balanced and doing well<br/>
+                <span style="color:orange;">Orange</span> — Moderate, with room for care<br/>
+                <span style="color:red;">Red</span> — Needs attention or rest<br/>
+
+                <button onclick="startSurvey()">Start Check-In</button>
+            </section>
+
             <section id="questionnaire">
+                <div id="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+
                 <div id="question-container" class="question"></div>
                 <button id="submit" class="hidden">Submit</button>
             </section>

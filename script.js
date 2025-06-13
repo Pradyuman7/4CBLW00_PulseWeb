@@ -70,9 +70,13 @@ function loadQuestions() {
 
 function displayQuestion() {
     const qText = selectedQuestions[currentQuestionIndex];
+    const total = selectedQuestions.length;
+    const progress = ((currentQuestionIndex) / total) * 100;
+    document.getElementById("progress-bar").style.width = `${progress}%`;
+
     questionContainer.innerHTML = `
     <div class="question" data-question-index="${currentQuestionIndex}">
-      <p>${qText}</p>
+      <p>Q${currentQuestionIndex + 1}/${total}: ${qText}</p>
       <button class="option" data-value="agree">Agree</button>
       <button class="option" data-value="disagree">Disagree</button>
     </div>
@@ -86,9 +90,10 @@ function displayQuestion() {
 
             setTimeout(() => {
                 currentQuestionIndex++;
-                if (currentQuestionIndex < selectedQuestions.length) {
+                if (currentQuestionIndex < total) {
                     displayQuestion();
                 } else {
+                    document.getElementById("progress-bar").style.width = `100%`;
                     submitBtn.classList.remove("hidden");
                     questionContainer.innerHTML = `<p>You're done! Click submit to see your results.</p>`;
                 }
@@ -203,5 +208,10 @@ function renderChart() {
         .catch(err => console.error("Failed to send color:", err));
 }
 
-// Initialize on load
-loadQuestions();
+function startSurvey() {
+    document.getElementById("introduction").classList.add("hidden");
+    questionnaire.classList.remove("hidden");
+    loadQuestions();
+}
+
+

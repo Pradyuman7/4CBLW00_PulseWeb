@@ -105,6 +105,75 @@ canvas {
     box-shadow: 0 0 10px rgba(0,0,0,0.03);
 }
 
+#introduction {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    line-height: 1.6;
+    animation: fadeIn 0.6s ease;
+}
+
+#introduction p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+#introduction strong {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+#introduction span {
+    display: inline-block;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+#introduction button {
+    margin-top: 25px;
+    padding: 10px 20px;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#introduction button:hover {
+    background-color: #2563eb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background: #eee;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+#progress-bar {
+    height: 10px;
+    background: #3b82f6;
+    width: 0%;
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+}
+
+
 /* Hidden Elements */
 .hidden {
     display: none;
